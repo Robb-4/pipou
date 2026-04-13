@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pour Karima 💕</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: #0d0b0b;
+      font-family: 'Georgia', serif;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* ── Stars ── */
+    #stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.1; transform: scale(1); }
+      50%       { opacity: 0.9; transform: scale(1.4); }
+    }
+
+    /* ── Floating hearts ── */
+    #hearts-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .heart {
+      position: absolute;
+      bottom: -10%;
+      opacity: 0;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.5; }
+      90%  { opacity: 0.2; }
+      100% { transform: translateY(-110vh) rotate(30deg); opacity: 0; }
+    }
+
+    /* ── Lock screen ── */
+    #lock-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      padding: 1rem;
+    }
+
+    .lock-glow {
+      font-size: 3.5rem;
+      margin-bottom: 1.2rem;
+      filter: drop-shadow(0 0 14px #a02030);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.12); }
+    }
+
+    .lock-title {
+      font-size: 1.35rem;
+      color: #c8a96e;
+      font-style: italic;
+      letter-spacing: 0.05rem;
+      margin-bottom: 0.3rem;
+    }
+    .lock-sub {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    .pw-input {
+      background: rgba(160,32,48,0.08);
+      border: 1.5px solid rgba(160,32,48,0.4);
+      border-radius: 10px;
+      padding: 0.8rem 1.8rem;
+      font-size: 1.1rem;
+      color: #c8a96e;
+      text-align: center;
+      outline: none;
+      width: 230px;
+      letter-spacing: 0.25rem;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .pw-input::placeholder { color: rgba(200,169,110,0.28); letter-spacing: 0.15rem; }
+    .pw-input:focus {
+      border-color: #a02030;
+      box-shadow: 0 0 20px rgba(160,32,48,0.3);
+    }
+
+    .unlock-btn {
+      margin-top: 1rem;
+      background: linear-gradient(135deg, #a02030, #6b0f1a);
+      border: none;
+      border-radius: 10px;
+      padding: 0.75rem 2.8rem;
+      color: #e8d5a3;
+      font-size: 1rem;
+      font-family: 'Georgia', serif;
+      cursor: pointer;
+      letter-spacing: 0.08rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .unlock-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(160,32,48,0.45);
+    }
+
+    .error-msg {
+      color: #c0392b;
+      font-size: 0.82rem;
+      margin-top: 0.8rem;
+      min-height: 1.1rem;
+    }
+
+    /* ── Main content ── */
+    #main-content {
+      display: none;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 2.5rem 1.2rem 3rem;
+      overflow-y: auto;
+    }
+    .page-container {
+      max-width: 480px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .page-title {
+      font-size: 2.6rem;
+      color: #c8a96e;
+      text-shadow: 0 0 28px rgba(160,32,48,0.5);
+      margin-bottom: 0.3rem;
+    }
+    .page-subtitle {
+      font-size: 0.95rem;
+      color: #888;
+      font-style: italic;
+      margin-bottom: 2.2rem;
+    }
+
+    /* Love card */
+    .love-card {
+      background: rgba(160,32,48,0.06);
+      border: 1px solid rgba(160,32,48,0.22);
+      border-radius: 14px;
+      padding: 1.8rem 1.5rem;
+      margin-bottom: 1.8rem;
+    }
+    .love-emoji {
+      font-size: 2.8rem;
+      display: block;
+      margin-bottom: 0.9rem;
+      animation: pulse 3.5s ease-in-out infinite;
+    }
+    .love-text {
+      color: #ccc;
+      line-height: 1.85;
+      font-size: 1.02rem;
+    }
+
+    /* Message section */
+    .message-section {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(160,32,48,0.15);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    .message-label {
+      display: block;
+      color: #c8a96e;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+      text-align: center;
+    }
+    .message-textarea {
+      width: 100%;
+      min-height: 100px;
+      background: rgba(160,32,48,0.04);
+      border: 1px solid rgba(160,32,48,0.2);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      color: #eee;
+      font-family: 'Georgia', serif;
+      font-size: 0.95rem;
+      resize: vertical;
+      outline: none;
+      transition: border-color .3s;
+    }
+    .message-textarea::placeholder { color: rgba(255,255,255,0.18); }
+    .message-textarea:focus { border-color: rgba(160,32,48,0.45); }
+
+    /* WhatsApp button */
+    .whatsapp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      width: 100%;
+      background: linear-gradient(135deg, #1da851, #0d6b35);
+      border: none;
+      border-radius: 10px;
+      padding: 1rem 2rem;
+      color: #fff;
+      font-size: 1.05rem;
+      font-family: 'Georgia', serif;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .whatsapp-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(29,168,81,0.4);
+    }
+    .whatsapp-icon { font-size: 1.3rem; }
+
+    .btn-divider {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 1rem 0;
+      color: rgba(255,255,255,0.12);
+      font-size: 0.78rem;
+      letter-spacing: 0.08rem;
+    }
+    .btn-divider::before, .btn-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .reply-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      width: 100%;
+      background: linear-gradient(135deg, #a02030, #6b0f1a);
+      border: none;
+      border-radius: 10px;
+      padding: 1rem 2rem;
+      color: #e8d5a3;
+      font-size: 1.05rem;
+      font-family: 'Georgia', serif;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .reply-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(160,32,48,0.45);
+    }
+
+    .footer {
+      margin-top: 2.5rem;
+      color: rgba(200,169,110,0.3);
+      font-size: 0.8rem;
+      font-style: italic;
+    }
+
+    /* Shake animation for wrong password */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%       { transform: translateX(-8px); }
+      40%       { transform: translateX(8px); }
+      60%       { transform: translateX(-6px); }
+      80%       { transform: translateX(6px); }
+    }
+    .shake { animation: shake 0.4s ease; }
+  </style>
+</head>
+<body>
+
+  <div id="stars"></div>
+  <div id="hearts-bg"></div>
+
+  <!-- ══ LOCK SCREEN ══ -->
+  <div id="lock-screen">
+    <div class="lock-glow">🔒</div>
+    <p class="lock-title">Page privée 💕</p>
+    <p class="lock-sub">Entre le mot de passe pour continuer mv</p>
+    <input
+      type="password"
+      id="pw-input"
+      class="pw-input"
+      placeholder="• • • • • •"
+      autocomplete="off"
+    />
+    <button class="unlock-btn" onclick="checkPW()">Ouvrir</button>
+    <p class="error-msg" id="error-msg"></p>
+  </div>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <div id="main-content">
+    <div class="page-container">
+
+      <h1 class="page-title">Karima 💕</h1>
+      <p class="page-subtitle">Profite bien… mais pas trop sans moi 😏</p>
+
+      <div class="love-card">
+        <span class="love-emoji">💍👑</span>
+        <p class="love-text">
+          Ton absence se fait sentir… mais ça me fait surtout réaliser que tu comptes beaucoup.<br>
+           J’espère que ton voyage est à la hauteur de toi.<br>
+            Profite bien,<br>
+            Mais n’oublie pas que quelqu’un ici attend ton retour 😉<br>
+            Et oui, tu me manques un peu.. beaucoup<br>
+            <em>hayati</em> ❤
+        </p>
+      </div>
+
+      <div class="message-section">
+        <span class="message-label">✍️ Laisse un petit message...</span>
+        <textarea
+          id="user-message"
+          class="message-textarea"
+          placeholder="Écris ce que tu veux lui dire..."
+        ></textarea>
+      </div>
+
+      <button class="whatsapp-btn" onclick="sendWhatsApp()">
+        <span class="whatsapp-icon">💬</span>
+        <span>Lui envoyer sur WhatsApp</span>
+      </button>
+
+      <div class="btn-divider">ou</div>
+
+      <button class="reply-btn" onclick="sendReply()">
+        <span class="whatsapp-icon">✉️</span>
+        <span>Me répondre</span>
+      </button>
+
+      <p class="footer">fait avec amour ♡</p>
+    </div>
+  </div>
+
+  <script>
+    /* ── Config ── */
+    const PW_HASH         = "7d64e44ccdb58b7841f5f3c6b7ba64d0d7d65a4ac135d711a2c852d17b0f6670"; // SHA-256
+    const WHATSAPP_NUMBER = "33770494184"; // numéro de Karima (sans le +)
+    const MY_NUMBER       = "33661042715"; // ← remplace par TON numéro
+    const DEFAULT_MSG     = "Wa7achtini 💕";
+
+    /* ── Stars ── */
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 90; i++) {
+      const s    = document.createElement('div');
+      s.className = 'star';
+      const size  = Math.random() * 2.2 + 0.4;
+      s.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%; top:${Math.random()*100}%;
+        animation-duration:${(Math.random()*3+2).toFixed(1)}s;
+        animation-delay:${(Math.random()*5).toFixed(1)}s;
+      `;
+      starsEl.appendChild(s);
+    }
+
+    /* ── Floating hearts ── */
+    const heartsEl  = document.getElementById('hearts-bg');
+    const heartList = ['✦','·','❤','✧','—','·','✦'];
+    for (let i = 0; i < 18; i++) {
+      const h = document.createElement('div');
+      h.className   = 'heart';
+      h.textContent = heartList[Math.floor(Math.random() * heartList.length)];
+      h.style.cssText = `
+        left:${Math.random()*100}%;
+        font-size:${(Math.random()*0.9+0.7).toFixed(1)}rem;
+        animation-duration:${(Math.random()*12+9).toFixed(1)}s;
+        animation-delay:${(Math.random()*10).toFixed(1)}s;
+      `;
+      heartsEl.appendChild(h);
+    }
+
+    /* ── Password ── */
+    const pwInput  = document.getElementById('pw-input');
+    const errorMsg = document.getElementById('error-msg');
+
+    pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') checkPW(); });
+
+    async function sha256(str) {
+      const buf    = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+
+    async function checkPW() {
+      const hash = await sha256(pwInput.value);
+      if (hash === PW_HASH) {
+        document.getElementById('lock-screen').style.display = 'none';
+        const main = document.getElementById('main-content');
+        main.style.display = 'block';
+        document.body.style.overflow = 'auto';
+      } else {
+        errorMsg.textContent = 'Mot de passe incorrect 💔';
+        pwInput.value = '';
+        pwInput.classList.remove('shake');
+        void pwInput.offsetWidth;
+        pwInput.classList.add('shake');
+        setTimeout(() => { errorMsg.textContent = ''; }, 2500);
+      }
+    }
+
+    /* ── WhatsApp ── */
+    function sendWhatsApp() {
+      const extra   = document.getElementById('user-message').value.trim();
+      const fullMsg = extra ? DEFAULT_MSG + '\n\n' + extra : DEFAULT_MSG;
+      const url     = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(fullMsg)}`;
+      window.open(url, '_blank');
+    }
+
+    function sendReply() {
+      const extra   = document.getElementById('user-message').value.trim();
+      const base    = '💌 Message pour toi...';
+      const fullMsg = extra ? base + '\n\n' + extra : base;
+      const url     = `https://api.whatsapp.com/send?phone=${MY_NUMBER}&text=${encodeURIComponent(fullMsg)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
