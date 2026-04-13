@@ -434,7 +434,7 @@
     function sendReply() {
       const extra   = document.getElementById('user-message').value.trim();
       const base    = '💌 Message pour toi...';
-      const fullMsg = extra ? base + '\n\n' + extra : base;
+      const fullMsg = extra ? base + '\n\n' + extra + '\n\n' + `https://robb-4.github.io/pipou/` : base;
       const url     = `https://api.whatsapp.com/send?phone=${MY_NUMBER}&text=${encodeURIComponent(fullMsg)}`;
       window.open(url, '_blank');
     }
