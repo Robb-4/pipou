@@ -3,441 +3,324 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pour Karima 💕</title>
+  <title>💖 Site Super Mignon 💖</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
+      font-family: 'Segoe UI', sans-serif;
       min-height: 100vh;
-      background: #080b14;
-      font-family: 'Georgia', serif;
-      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #c8e6ff, #dceeff, #b3d9ff);
       overflow: hidden;
     }
 
-    /* ── Stars ── */
-    #stars {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
+    /* ─── Confettis ─── */
+    .confetti-wrap {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
     }
-    .star {
+    .confetti {
       position: absolute;
-      background: #fff;
+      width: 10px; height: 10px;
       border-radius: 50%;
-      animation: twinkle ease-in-out infinite;
+      animation: fall linear infinite;
+      opacity: 0.7;
     }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.1; transform: scale(1); }
-      50%       { opacity: 0.9; transform: scale(1.4); }
-    }
-
-    /* ── Floating hearts ── */
-    #hearts-bg {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .heart {
-      position: absolute;
-      bottom: -10%;
-      opacity: 0;
-      animation: floatUp linear infinite;
-    }
-    @keyframes floatUp {
-      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
-      10%  { opacity: 0.5; }
-      90%  { opacity: 0.2; }
-      100% { transform: translateY(-110vh) rotate(30deg); opacity: 0; }
+    @keyframes fall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
 
-    /* ── Lock screen ── */
-    #lock-screen {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      padding: 1rem;
-    }
-
-    .lock-glow {
-      font-size: 3.5rem;
-      margin-bottom: 1.2rem;
-      filter: drop-shadow(0 0 14px #1e5cb3);
-      animation: pulse 2.5s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50%       { transform: scale(1.12); }
-    }
-
-    .lock-title {
-      font-size: 1.35rem;
-      color: #7ab3e0;
-      font-style: italic;
-      letter-spacing: 0.05rem;
-      margin-bottom: 0.3rem;
-    }
-    .lock-sub {
-      font-size: 0.85rem;
-      color: #666;
-      margin-bottom: 2rem;
-    }
-
-    .pw-input {
-      background: rgba(30,92,179,0.08);
-      border: 1.5px solid rgba(30,92,179,0.4);
-      border-radius: 10px;
-      padding: 0.8rem 1.8rem;
-      font-size: 1.1rem;
-      color: #7ab3e0;
+    /* ─── Carte centrale ─── */
+    .card {
+      position: relative; z-index: 1;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 28px;
+      padding: 48px 40px;
+      box-shadow: 0 20px 60px rgba(30,120,255,0.18);
+      max-width: 480px;
+      width: 90%;
       text-align: center;
-      outline: none;
-      width: 230px;
-      letter-spacing: 0.25rem;
-      transition: border-color .3s, box-shadow .3s;
+      animation: popIn 0.6s cubic-bezier(.34,1.56,.64,1);
     }
-    .pw-input::placeholder { color: rgba(122,179,224,0.28); letter-spacing: 0.15rem; }
-    .pw-input:focus {
-      border-color: #1e5cb3;
-      box-shadow: 0 0 20px rgba(30,92,179,0.3);
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
     }
 
-    .unlock-btn {
-      margin-top: 1rem;
-      background: linear-gradient(135deg, #1e5cb3, #0d3270);
-      border: none;
-      border-radius: 10px;
-      padding: 0.75rem 2.8rem;
-      color: #ddeeff;
+    h1 { font-size: 2rem; color: #1a6fcc; margin-bottom: 8px; }
+    .subtitle { color: #4a90d9; font-size: 1rem; margin-bottom: 32px; }
+
+    /* ─── Input code ─── */
+    #code-input {
+      font-size: 2.5rem;
+      text-align: center;
+      letter-spacing: 12px;
+      border: 3px solid #90c4f0;
+      border-radius: 16px;
+      padding: 12px 20px;
+      width: 200px;
+      color: #1a6fcc;
+      outline: none;
+      transition: border-color 0.3s;
+      background: #f0f8ff;
+    }
+    #code-input:focus { border-color: #1a6fcc; }
+
+    .btn {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 14px 36px;
       font-size: 1rem;
-      font-family: 'Georgia', serif;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
       cursor: pointer;
-      letter-spacing: 0.08rem;
-      transition: transform .2s, box-shadow .2s;
+      color: #fff;
+      background: linear-gradient(135deg, #4aa8ff, #1a6fcc);
+      box-shadow: 0 6px 20px rgba(26,111,204,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
     }
-    .unlock-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(30,92,179,0.45);
-    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(26,111,204,0.45); }
+    .btn:active { transform: scale(0.96); }
 
     .error-msg {
-      color: #c0392b;
-      font-size: 0.82rem;
-      margin-top: 0.8rem;
-      min-height: 1.1rem;
-    }
-
-    /* ── Main content ── */
-    #main-content {
-      display: none;
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      padding: 2.5rem 1.2rem 3rem;
-      overflow-y: auto;
-    }
-    .page-container {
-      max-width: 480px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .page-title {
-      font-size: 2.6rem;
-      color: #7ab3e0;
-      text-shadow: 0 0 28px rgba(30,92,179,0.7);
-      margin-bottom: 0.3rem;
-    }
-    .page-subtitle {
-      font-size: 0.95rem;
-      color: #888;
-      font-style: italic;
-      margin-bottom: 2.2rem;
-    }
-
-    /* Love card */
-    .love-card {
-      background: rgba(30,92,179,0.06);
-      border: 1px solid rgba(30,92,179,0.22);
-      border-radius: 14px;
-      padding: 1.8rem 1.5rem;
-      margin-bottom: 1.8rem;
-    }
-    .love-emoji {
-      font-size: 2.8rem;
-      display: block;
-      margin-bottom: 0.9rem;
-      animation: pulse 3.5s ease-in-out infinite;
-    }
-    .love-text {
-      color: #ccc;
-      line-height: 1.85;
-      font-size: 1.02rem;
-    }
-
-    /* Message section */
-    .message-section {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(30,92,179,0.15);
-      border-radius: 14px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      text-align: left;
-    }
-    .message-label {
-      display: block;
-      color: #7ab3e0;
+      color: #1a6fcc;
       font-size: 0.9rem;
-      margin-bottom: 0.8rem;
-      text-align: center;
+      margin-top: 12px;
+      min-height: 20px;
+      animation: shake 0.4s;
     }
-    .message-textarea {
-      width: 100%;
-      min-height: 100px;
-      background: rgba(30,92,179,0.04);
-      border: 1px solid rgba(30,92,179,0.2);
-      border-radius: 10px;
-      padding: 0.9rem 1rem;
-      color: #eee;
-      font-family: 'Georgia', serif;
-      font-size: 0.95rem;
-      resize: vertical;
-      outline: none;
-      transition: border-color .3s;
-    }
-    .message-textarea::placeholder { color: rgba(255,255,255,0.18); }
-    .message-textarea:focus { border-color: rgba(30,92,179,0.55); }
-
-    /* WhatsApp button */
-    .whatsapp-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.7rem;
-      width: 100%;
-      background: linear-gradient(135deg, #1da851, #0d6b35);
-      border: none;
-      border-radius: 10px;
-      padding: 1rem 2rem;
-      color: #fff;
-      font-size: 1.05rem;
-      font-family: 'Georgia', serif;
-      cursor: pointer;
-      transition: transform .2s, box-shadow .2s;
-    }
-    .whatsapp-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(29,168,81,0.4);
-    }
-    .whatsapp-icon { font-size: 1.3rem; }
-
-    .btn-divider {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin: 1rem 0;
-      color: rgba(255,255,255,0.12);
-      font-size: 0.78rem;
-      letter-spacing: 0.08rem;
-    }
-    .btn-divider::before, .btn-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: rgba(255,255,255,0.08);
-    }
-
-    .reply-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.7rem;
-      width: 100%;
-      background: linear-gradient(135deg, #1e5cb3, #0d3270);
-      border: none;
-      border-radius: 10px;
-      padding: 1rem 2rem;
-      color: #ddeeff;
-      font-size: 1.05rem;
-      font-family: 'Georgia', serif;
-      cursor: pointer;
-      transition: transform .2s, box-shadow .2s;
-    }
-    .reply-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(30,92,179,0.45);
-    }
-
-    .footer {
-      margin-top: 2.5rem;
-      color: rgba(122,179,224,0.35);
-      font-size: 0.8rem;
-      font-style: italic;
-    }
-
-    /* Shake animation for wrong password */
     @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20%       { transform: translateX(-8px); }
-      40%       { transform: translateX(8px); }
-      60%       { transform: translateX(-6px); }
-      80%       { transform: translateX(6px); }
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-8px); }
+      75%      { transform: translateX(8px); }
     }
-    .shake { animation: shake 0.4s ease; }
+
+    /* ─── Memes ─── */
+    .meme-box {
+      font-size: 5rem;
+      margin: 8px 0 16px;
+      line-height: 1.2;
+    }
+    .meme-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #555;
+      margin-bottom: 6px;
+    }
+    .meme-text {
+      font-size: 1rem;
+      color: #888;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* ─── Message final ─── */
+    #screen-final h1 {
+      font-size: 2.4rem;
+      background: linear-gradient(135deg, #1a6fcc, #4aa8ff, #7dd3fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: pulse 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to   { transform: scale(1.06); }
+    }
+    .hearts {
+      font-size: 3rem;
+      display: block;
+      margin: 16px 0;
+      animation: bounce 0.8s ease-in-out infinite alternate;
+    }
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-10px); }
+    }
+    .final-msg {
+      font-size: 1.15rem;
+      color: #4a90d9;
+      line-height: 1.8;
+    }
+
+    /* ─── Images responsives ─── */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(26,111,204,0.15);
+    }
+
+    /* ─── Responsive mobile ─── */
+    @media (max-width: 480px) {
+      .card { padding: 32px 20px; }
+      h1 { font-size: 1.5rem; }
+      .meme-box { font-size: 3.5rem; }
+      .btn { padding: 12px 24px; font-size: 0.95rem; }
+      #code-input { font-size: 2rem; width: 170px; letter-spacing: 8px; }
+      #screen-final h1 { font-size: 1.8rem; }
+    }
+
+    /* ─── Utilitaires ─── */
+    .screen { display: none; }
+    .screen.active { display: block; }
   </style>
 </head>
 <body>
 
-  <div id="stars"></div>
-  <div id="hearts-bg"></div>
+<!-- Confettis -->
+<div class="confetti-wrap" id="confetti-wrap"></div>
 
-  <!-- ══ LOCK SCREEN ══ -->
-  <div id="lock-screen">
-    <div class="lock-glow">🔒</div>
-    <p class="lock-title">Page privée 💕</p>
-    <p class="lock-sub">Entre le mot de passe pour continuer mv</p>
-    <input
-      type="password"
-      id="pw-input"
-      class="pw-input"
-      placeholder="• • • • • •"
-      autocomplete="off"
-    />
-    <button class="unlock-btn" onclick="checkPW()">Ouvrir</button>
-    <p class="error-msg" id="error-msg"></p>
+<!-- ════════════════════════════════════════
+     ÉCRAN 0 – Page d'accueil / code secret
+════════════════════════════════════════ -->
+<div class="card screen active" id="screen-0">
+  <div style="font-size:3rem;">🌸</div>
+  <h1>Site Super Mignon</h1>
+  <p class="subtitle">Entre le code secret pour continuer 🔐</p>
+  <input id="code-input" type="text" maxlength="4" placeholder="????">
+  <br>
+  <button class="btn" onclick="checkCode()">Entrer ✨</button>
+  <p class="error-msg" id="error-msg"></p>
+</div>
+
+<!-- ════════════════════════════════════════
+     ÉCRAN 1 – Meme 1
+════════════════════════════════════════ -->
+<div class="card screen" id="screen-1">
+  <div class="meme-box">🐶😐</div>
+  <p class="meme-title">Oupsi</p>
+  <div class="meme-text">
+    <img src="https://i.imgflip.com/aq72uj.jpg" alt="meme drôle" title="made at imgflip.com" />
   </div>
+  <button class="btn" onclick="showScreen(2)">Tu veux voir le vrai message ? 👀</button>
+</div>
 
-  <!-- ══ MAIN CONTENT ══ -->
-  <div id="main-content">
-    <div class="page-container">
-
-      <h1 class="page-title">Karima</h1>
-      <p class="page-subtitle">😏</p>
-
-      <div class="love-card">
-        <span class="love-emoji">💍👑</span>
-        <p class="love-text">
-          La goat.<br>
-            Ma cowgirl de RDR,<br>
-            Tout vas bien ce passer, tes forte l'oublie pas<br>
-            Je suis la si jamais t'as besoin<br>
-            je t'aime trop.
-            <em>hayati</em> ❤
-        </p>
-      </div>
-
-      <div class="message-section">
-        <span class="message-label">✍️ Laisse un petit message...</span>
-        <textarea
-          id="user-message"
-          class="message-textarea"
-          placeholder="Écris ce que tu veux lui dire..."
-        ></textarea>
-      </div>
-
-      <button class="whatsapp-btn" onclick="sendWhatsApp()">
-        <span class="whatsapp-icon">💬</span>
-        <span>Lui envoyer sur WhatsApp</span>
-      </button>
-
-      <div class="btn-divider">ou</div>
-
-      <button class="reply-btn" onclick="sendReply()">
-        <span class="whatsapp-icon">✉️</span>
-        <span>Me répondre</span>
-      </button>
-
-      <p class="footer">fait avec amour ♡</p>
-    </div>
+<!-- ════════════════════════════════════════
+     ÉCRAN 2 – Meme 2
+════════════════════════════════════════ -->
+<div class="card screen" id="screen-2">
+  <div class="meme-box">🤔💭</div>
+  <p class="meme-title">Hmm… t'es sûre sûre sûre ?</p>
+  <div class="meme-text">
+    <img src="https://i.imgflip.com/aq738c.jpg" alt="meme drôle" title="made at imgflip.com"/>
   </div>
+  <button class="btn" onclick="showScreen(3)">Oui je veux LE vrai message ! 😤</button>
+</div>
 
-  <script>
-    /* ── Config ── */
-    const PW_HASH         = "4c15ccfff33e64403bb1e01586d2c5c360c3eeab526c4c44f7a010fd998d3405";
-    const WHATSAPP_NUMBER = atob("MzM3NzA0OTQxODQ=");
-    const MY_NUMBER       = atob("MzM2NjEwNDI3MTU=");
-    const DEFAULT_MSG     = "Wa7achtini 💕";
+<!-- ════════════════════════════════════════
+     ÉCRAN 3 – Meme 3
+════════════════════════════════════════ -->
+<div class="card screen" id="screen-3">
+  <div class="meme-box">🙃🎭</div>
+  <p class="meme-title">Spoiler : c'est toujours pas le message.</p>
+  <div class="meme-text">
+    <img src="https://i.imgflip.com/aq73fv.jpg" alt="meme drôle" title="made at imgflip.com"/>
+    <strong>Dernier bouton, promis ! 🤞</strong>
+  </div>
+  <button class="btn" onclick="showFinal()">BON OK MONTRE MOI 😭</button>
+</div>
 
-    /* ── Stars ── */
-    const starsEl = document.getElementById('stars');
-    for (let i = 0; i < 90; i++) {
-      const s    = document.createElement('div');
-      s.className = 'star';
-      const size  = Math.random() * 2.2 + 0.4;
-      s.style.cssText = `
-        width:${size}px; height:${size}px;
-        left:${Math.random()*100}%; top:${Math.random()*100}%;
-        animation-duration:${(Math.random()*3+2).toFixed(1)}s;
-        animation-delay:${(Math.random()*5).toFixed(1)}s;
-      `;
-      starsEl.appendChild(s);
+<!-- ════════════════════════════════════════
+     ÉCRAN FINAL – Le vrai message 💖
+════════════════════════════════════════ -->
+<div class="card screen" id="screen-final">
+  <span class="hearts">💖💕💗</span>
+  <h1>Je t'aime trop ma femme</h1>
+  <span class="hearts">💗💕💖</span>
+  <p class="final-msg">
+    Merci d'avoir cliqué trois fois juste pour lire ça.<br>
+    PARDON PARDON PARDON. 😊<br><br>
+    T'es la meilleure personne du monde,<br>
+    et je suis le gars le plus chanceux. 🍀
+  </p>
+  <br>
+  <button class="btn" onclick="restart()">Recommencer depuis le début 🔄</button>
+</div>
+
+<script>
+  /* ── Confettis générés dynamiquement ── */
+  (function() {
+    const colors = ['#4aa8ff','#90c4f0','#7dd3fc','#1a6fcc','#bae6fd','#dbeafe'];
+    const wrap = document.getElementById('confetti-wrap');
+    for (let i = 0; i < 35; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left        = Math.random() * 100 + 'vw';
+      c.style.width       = (6 + Math.random() * 8) + 'px';
+      c.style.height      = (6 + Math.random() * 8) + 'px';
+      c.style.background  = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDuration = (4 + Math.random() * 8) + 's';
+      c.style.animationDelay   = (Math.random() * 6) + 's';
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      wrap.appendChild(c);
     }
+  })();
 
-    /* ── Floating hearts ── */
-    const heartsEl  = document.getElementById('hearts-bg');
-    const heartList = ['✦','·','❤','✧','—','·','✦'];
-    for (let i = 0; i < 18; i++) {
-      const h = document.createElement('div');
-      h.className   = 'heart';
-      h.textContent = heartList[Math.floor(Math.random() * heartList.length)];
-      h.style.cssText = `
-        left:${Math.random()*100}%;
-        font-size:${(Math.random()*0.9+0.7).toFixed(1)}rem;
-        animation-duration:${(Math.random()*12+9).toFixed(1)}s;
-        animation-delay:${(Math.random()*10).toFixed(1)}s;
-      `;
-      heartsEl.appendChild(h);
+  /* ── Vérifie le code secret ── */
+  function checkCode() {
+    const val = document.getElementById('code-input').value.trim();
+    const err = document.getElementById('error-msg');
+    if (val === '0802') {
+      err.textContent = '';
+      showScreen(1);
+    } else {
+      err.textContent = '❌ Mauvais code, essaie encore ! (psst : c\'est une date…)';
     }
+  }
 
-    /* ── Password ── */
-    const pwInput  = document.getElementById('pw-input');
-    const errorMsg = document.getElementById('error-msg');
+  /* Permet aussi d'appuyer Entrée */
+  document.getElementById('code-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkCode();
+  });
 
-    pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') checkPW(); });
+  /* ── Navigation entre les écrans ── */
+  function showScreen(n) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + n).classList.add('active');
+    // scroll en haut au cas où
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-    async function sha256(str) {
-      const buf    = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  function showFinal() {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-final').classList.add('active');
+    // feux d'artifice de confettis supplémentaires
+    launchExtraConfetti();
+  }
+
+  function restart() {
+    document.getElementById('code-input').value = '';
+    showScreen(0);
+  }
+
+  /* ── Confettis bonus pour le message final ── */
+  function launchExtraConfetti() {
+    const colors = ['#4aa8ff','#bae6fd','#7dd3fc','#dbeafe','#1a6fcc','#93c5fd'];
+    const wrap = document.getElementById('confetti-wrap');
+    for (let i = 0; i < 40; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left        = Math.random() * 100 + 'vw';
+      c.style.top         = '-20px';
+      c.style.width       = (8 + Math.random() * 10) + 'px';
+      c.style.height      = (8 + Math.random() * 10) + 'px';
+      c.style.background  = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDuration = (2 + Math.random() * 4) + 's';
+      c.style.animationDelay   = (Math.random() * 1) + 's';
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+      wrap.appendChild(c);
+      // nettoyage après l'animation
+      setTimeout(() => c.remove(), 6000);
     }
-
-    async function checkPW() {
-      const hash = await sha256(pwInput.value);
-      if (hash === PW_HASH) {
-        document.getElementById('lock-screen').style.display = 'none';
-        const main = document.getElementById('main-content');
-        main.style.display = 'block';
-        document.body.style.overflow = 'auto';
-      } else {
-        errorMsg.textContent = 'Mot de passe incorrect 💔';
-        pwInput.value = '';
-        pwInput.classList.remove('shake');
-        void pwInput.offsetWidth;
-        pwInput.classList.add('shake');
-        setTimeout(() => { errorMsg.textContent = ''; }, 2500);
-      }
-    }
-
-    /* ── WhatsApp ── */
-    function sendWhatsApp() {
-      const extra   = document.getElementById('user-message').value.trim();
-      const fullMsg = extra ? DEFAULT_MSG + '\n\n' + extra : DEFAULT_MSG;
-      const url     = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(fullMsg)}`;
-      window.open(url, '_blank');
-    }
-
-    function sendReply() {
-      const extra   = document.getElementById('user-message').value.trim();
-      const base    = '💌 Message pour toi...';
-      const fullMsg = extra ? base + '\n\n' + extra + '\n\n' + `https://robb-4.github.io/pipou/` : base;
-      const url     = `https://api.whatsapp.com/send?phone=${MY_NUMBER}&text=${encodeURIComponent(fullMsg)}`;
-      window.open(url, '_blank');
-    }
-  </script>
+  }
+</script>
 </body>
 </html>
