@@ -9,7 +9,7 @@
 
     body {
       min-height: 100vh;
-      background: #0d0b0b;
+      background: #080b14;
       font-family: 'Georgia', serif;
       color: #fff;
       overflow: hidden;
@@ -68,7 +68,7 @@
     .lock-glow {
       font-size: 3.5rem;
       margin-bottom: 1.2rem;
-      filter: drop-shadow(0 0 14px #a02030);
+      filter: drop-shadow(0 0 14px #1e5cb3);
       animation: pulse 2.5s ease-in-out infinite;
     }
     @keyframes pulse {
@@ -78,7 +78,7 @@
 
     .lock-title {
       font-size: 1.35rem;
-      color: #c8a96e;
+      color: #7ab3e0;
       font-style: italic;
       letter-spacing: 0.05rem;
       margin-bottom: 0.3rem;
@@ -90,31 +90,31 @@
     }
 
     .pw-input {
-      background: rgba(160,32,48,0.08);
-      border: 1.5px solid rgba(160,32,48,0.4);
+      background: rgba(30,92,179,0.08);
+      border: 1.5px solid rgba(30,92,179,0.4);
       border-radius: 10px;
       padding: 0.8rem 1.8rem;
       font-size: 1.1rem;
-      color: #c8a96e;
+      color: #7ab3e0;
       text-align: center;
       outline: none;
       width: 230px;
       letter-spacing: 0.25rem;
       transition: border-color .3s, box-shadow .3s;
     }
-    .pw-input::placeholder { color: rgba(200,169,110,0.28); letter-spacing: 0.15rem; }
+    .pw-input::placeholder { color: rgba(122,179,224,0.28); letter-spacing: 0.15rem; }
     .pw-input:focus {
-      border-color: #a02030;
-      box-shadow: 0 0 20px rgba(160,32,48,0.3);
+      border-color: #1e5cb3;
+      box-shadow: 0 0 20px rgba(30,92,179,0.3);
     }
 
     .unlock-btn {
       margin-top: 1rem;
-      background: linear-gradient(135deg, #a02030, #6b0f1a);
+      background: linear-gradient(135deg, #1e5cb3, #0d3270);
       border: none;
       border-radius: 10px;
       padding: 0.75rem 2.8rem;
-      color: #e8d5a3;
+      color: #ddeeff;
       font-size: 1rem;
       font-family: 'Georgia', serif;
       cursor: pointer;
@@ -123,7 +123,7 @@
     }
     .unlock-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(160,32,48,0.45);
+      box-shadow: 0 8px 24px rgba(30,92,179,0.45);
     }
 
     .error-msg {
@@ -150,8 +150,8 @@
 
     .page-title {
       font-size: 2.6rem;
-      color: #c8a96e;
-      text-shadow: 0 0 28px rgba(160,32,48,0.5);
+      color: #7ab3e0;
+      text-shadow: 0 0 28px rgba(30,92,179,0.7);
       margin-bottom: 0.3rem;
     }
     .page-subtitle {
@@ -163,8 +163,8 @@
 
     /* Love card */
     .love-card {
-      background: rgba(160,32,48,0.06);
-      border: 1px solid rgba(160,32,48,0.22);
+      background: rgba(30,92,179,0.06);
+      border: 1px solid rgba(30,92,179,0.22);
       border-radius: 14px;
       padding: 1.8rem 1.5rem;
       margin-bottom: 1.8rem;
@@ -184,7 +184,7 @@
     /* Message section */
     .message-section {
       background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(160,32,48,0.15);
+      border: 1px solid rgba(30,92,179,0.15);
       border-radius: 14px;
       padding: 1.5rem;
       margin-bottom: 1.5rem;
@@ -192,7 +192,7 @@
     }
     .message-label {
       display: block;
-      color: #c8a96e;
+      color: #7ab3e0;
       font-size: 0.9rem;
       margin-bottom: 0.8rem;
       text-align: center;
@@ -200,8 +200,8 @@
     .message-textarea {
       width: 100%;
       min-height: 100px;
-      background: rgba(160,32,48,0.04);
-      border: 1px solid rgba(160,32,48,0.2);
+      background: rgba(30,92,179,0.04);
+      border: 1px solid rgba(30,92,179,0.2);
       border-radius: 10px;
       padding: 0.9rem 1rem;
       color: #eee;
@@ -212,7 +212,7 @@
       transition: border-color .3s;
     }
     .message-textarea::placeholder { color: rgba(255,255,255,0.18); }
-    .message-textarea:focus { border-color: rgba(160,32,48,0.45); }
+    .message-textarea:focus { border-color: rgba(30,92,179,0.55); }
 
     /* WhatsApp button */
     .whatsapp-btn {
@@ -259,11 +259,11 @@
       justify-content: center;
       gap: 0.7rem;
       width: 100%;
-      background: linear-gradient(135deg, #a02030, #6b0f1a);
+      background: linear-gradient(135deg, #1e5cb3, #0d3270);
       border: none;
       border-radius: 10px;
       padding: 1rem 2rem;
-      color: #e8d5a3;
+      color: #ddeeff;
       font-size: 1.05rem;
       font-family: 'Georgia', serif;
       cursor: pointer;
@@ -271,12 +271,12 @@
     }
     .reply-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(160,32,48,0.45);
+      box-shadow: 0 8px 24px rgba(30,92,179,0.45);
     }
 
     .footer {
       margin-top: 2.5rem;
-      color: rgba(200,169,110,0.3);
+      color: rgba(122,179,224,0.35);
       font-size: 0.8rem;
       font-style: italic;
     }
@@ -317,17 +317,15 @@
   <div id="main-content">
     <div class="page-container">
 
-      <h1 class="page-title">Karima 💕</h1>
-      <p class="page-subtitle">Profite bien… mais pas trop sans moi 😏</p>
+      <h1 class="page-title">Karima</h1>
+      <p class="page-subtitle">😏</p>
 
       <div class="love-card">
         <span class="love-emoji">💍👑</span>
         <p class="love-text">
-          Ton absence se fait sentir… mais ça me fait surtout réaliser que tu comptes beaucoup.<br>
-           J’espère que ton voyage est à la hauteur de toi.<br>
-            Profite bien,<br>
-            Mais n’oublie pas que quelqu’un ici attend ton retour 😉<br>
-            Et oui, tu me manques un peu.. beaucoup<br>
+          La goat.<br>
+            Ma cowgirl de RDR,<br>
+            je t'aime trop.
             <em>hayati</em> ❤
         </p>
       </div>
@@ -359,9 +357,9 @@
 
   <script>
     /* ── Config ── */
-    const PW_HASH         = "7d64e44ccdb58b7841f5f3c6b7ba64d0d7d65a4ac135d711a2c852d17b0f6670"; // SHA-256
-    const WHATSAPP_NUMBER = "33770494184"; // numéro de Karima (sans le +)
-    const MY_NUMBER       = "33661042715"; // ← remplace par TON numéro
+    const PW_HASH         = "4c15ccfff33e64403bb1e01586d2c5c360c3eeab526c4c44f7a010fd998d3405";
+    const WHATSAPP_NUMBER = atob("MzM3NzA0OTQxODQ=");
+    const MY_NUMBER       = atob("MzM2NjEwNDI3MTU=");
     const DEFAULT_MSG     = "Wa7achtini 💕";
 
     /* ── Stars ── */
