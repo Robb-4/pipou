@@ -3,322 +3,751 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>💖 Site Super Mignon 💖</title>
+  <title>Pour PIPS...</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #07070f;
+      --surface:   #0d0d1c;
+      --surface2:  #13132a;
+      --gold:      #c9a96e;
+      --gold-lt:   #e8d5a3;
+      --gold-dim:  rgba(201,169,110,0.18);
+      --text:      #f0ebe0;
+      --muted:     #7a7060;
+      --ok:        #7ec498;
+      --err:       #c97070;
+      --border:    rgba(201,169,110,0.15);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #c8e6ff, #dceeff, #b3d9ff);
-      overflow: hidden;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
 
-    /* ─── Confettis ─── */
-    .confetti-wrap {
-      position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    }
-    .confetti {
-      position: absolute;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      animation: fall linear infinite;
-      opacity: 0.7;
-    }
-    @keyframes fall {
-      0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    /* ── Particules ─────────────────────────────────────── */
+    #cvs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    /* ─── Carte centrale ─── */
-    .card {
-      position: relative; z-index: 1;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(10px);
-      border-radius: 28px;
-      padding: 48px 40px;
-      box-shadow: 0 20px 60px rgba(30,120,255,0.18);
-      max-width: 480px;
-      width: 90%;
+    /* ── Écran de verrouillage ───────────────────────────── */
+    #lock {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 460px;
+      padding: 24px 20px;
+    }
+
+    /* En-tête */
+    .hdr {
       text-align: center;
-      animation: popIn 0.6s cubic-bezier(.34,1.56,.64,1);
+      margin-bottom: 44px;
     }
-    @keyframes popIn {
-      from { transform: scale(0.5); opacity: 0; }
-      to   { transform: scale(1);   opacity: 1; }
-    }
-
-    h1 { font-size: 2rem; color: #1a6fcc; margin-bottom: 8px; }
-    .subtitle { color: #4a90d9; font-size: 1rem; margin-bottom: 32px; }
-
-    /* ─── Input code ─── */
-    #code-input {
-      font-size: 2.5rem;
-      text-align: center;
-      letter-spacing: 12px;
-      border: 3px solid #90c4f0;
-      border-radius: 16px;
-      padding: 12px 20px;
-      width: 200px;
-      color: #1a6fcc;
-      outline: none;
-      transition: border-color 0.3s;
-      background: #f0f8ff;
-    }
-    #code-input:focus { border-color: #1a6fcc; }
-
-    .btn {
+    .hdr-tag {
       display: inline-block;
-      margin-top: 24px;
-      padding: 14px 36px;
-      font-size: 1rem;
-      font-weight: 700;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      color: #fff;
-      background: linear-gradient(135deg, #4aa8ff, #1a6fcc);
-      box-shadow: 0 6px 20px rgba(26,111,204,0.35);
-      transition: transform 0.15s, box-shadow 0.15s;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .75;
+      margin-bottom: 18px;
     }
-    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(26,111,204,0.45); }
-    .btn:active { transform: scale(0.96); }
+    .hdr-icon {
+      font-size: 34px;
+      display: block;
+      margin-bottom: 14px;
+      filter: drop-shadow(0 0 10px rgba(201,169,110,.35));
+      animation: glowPulse 3.5s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%,100% { filter: drop-shadow(0 0 8px rgba(201,169,110,.3)); }
+      50%      { filter: drop-shadow(0 0 22px rgba(201,169,110,.75)); }
+    }
+    .hdr h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 44px;
+      font-weight: 300;
+      line-height: 1.1;
+    }
+    .hdr h1 em { color: var(--gold); font-style: italic; }
 
-    .error-msg {
-      color: #1a6fcc;
-      font-size: 0.9rem;
-      margin-top: 12px;
-      min-height: 20px;
-      animation: shake 0.4s;
+    /* Carte énigme */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 26px 24px 18px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .45s, background .45s, transform .2s;
     }
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity .45s;
+    }
+    .card.solved::after  { opacity: 1; }
+    .card.solved {
+      border-color: rgba(126,196,152,.35);
+      background: rgba(126,196,152,.025);
+    }
+    .card.shake { animation: shake .45s ease; }
     @keyframes shake {
       0%,100% { transform: translateX(0); }
-      25%      { transform: translateX(-8px); }
-      75%      { transform: translateX(8px); }
+      20%      { transform: translateX(-9px); }
+      40%      { transform: translateX(9px); }
+      60%      { transform: translateX(-5px); }
+      80%      { transform: translateX(5px); }
     }
 
-    /* ─── Memes ─── */
-    .meme-box {
-      font-size: 5rem;
-      margin: 8px 0 16px;
-      line-height: 1.2;
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
     }
-    .meme-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #555;
-      margin-bottom: 6px;
+    .card-num {
+      width: 30px; height: 30px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 500;
+      color: var(--gold);
+      flex-shrink: 0;
+      transition: all .45s;
     }
-    .meme-text {
-      font-size: 1rem;
-      color: #888;
-      margin-bottom: 20px;
-      line-height: 1.5;
+    .card.solved .card-num {
+      border-color: var(--ok);
+      color: var(--ok);
+      background: rgba(126,196,152,.15);
+    }
+    .card-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--muted);
     }
 
-    /* ─── Message final ─── */
-    #screen-final h1 {
-      font-size: 2.4rem;
-      background: linear-gradient(135deg, #1a6fcc, #4aa8ff, #7dd3fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: pulse 1.5s ease-in-out infinite alternate;
+    .hint {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.55;
+      margin-bottom: 18px;
+      opacity: .88;
     }
-    @keyframes pulse {
-      from { transform: scale(1); }
-      to   { transform: scale(1.06); }
+    .hint b { color: var(--gold); font-weight: 400; }
+
+    .field {
+      position: relative;
     }
-    .hearts {
-      font-size: 3rem;
+    .field input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid rgba(201,169,110,.12);
+      border-radius: 11px;
+      padding: 14px 52px 14px 18px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: 2px;
+      outline: none;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .field input::placeholder { color: var(--muted); letter-spacing: 1px; font-size: 13px; }
+    .field input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,169,110,.07);
+    }
+    .field input.ok  { border-color: var(--ok);  background: rgba(126,196,152,.04); }
+    .field input:disabled { opacity: .65; cursor: not-allowed; }
+
+    .go {
+      position: absolute;
+      right: 8px; top: 50%;
+      transform: translateY(-50%);
+      background: var(--gold);
+      border: none;
+      border-radius: 8px;
+      width: 36px; height: 36px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: var(--bg);
+      transition: background .2s, transform .2s;
+    }
+    .go:hover  { background: var(--gold-lt); transform: translateY(-50%) scale(1.07); }
+    .go:disabled { opacity: .45; cursor: not-allowed; }
+
+    .msg {
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-top: 10px;
+      height: 16px;
+      transition: opacity .3s;
+    }
+    .msg.ok  { color: var(--ok); }
+    .msg.err { color: var(--err); }
+
+    /* ── Faux clavier (énigme III) ──────────────────────── */
+    .kb-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .kb-slot {
+      width: 54px; height: 54px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0;
+      transition: all .35s;
+    }
+    .kb-slot.active {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-dim);
+      box-shadow: 0 0 14px rgba(201,169,110,.25);
+    }
+    .kb-slot.done {
+      border-color: var(--ok);
+      color: var(--ok);
+      background: rgba(126,196,152,.1);
+      box-shadow: 0 0 12px rgba(126,196,152,.2);
+    }
+    .kb-plus {
+      color: var(--muted);
+      font-size: 20px;
+      font-weight: 300;
+    }
+    .kb-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+      user-select: none;
+    }
+    .kb-row {
+      display: flex;
+      gap: 5px;
+    }
+    .kb-key {
+      width: 32px; height: 32px;
+      background: var(--surface2);
+      border: 1px solid rgba(201,169,110,.1);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .18s;
+      letter-spacing: 0;
+    }
+    .kb-key:hover {
+      background: rgba(201,169,110,.08);
+      color: var(--text);
+      border-color: rgba(201,169,110,.3);
+    }
+    .kb-key:active, .kb-key.pressed {
+      transform: scale(.88);
+      background: var(--gold-dim);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .kb-key.disabled-kb { pointer-events: none; opacity: .35; }
+
+    /* Progression */
+    .prog {
+      text-align: center;
+      margin-top: 28px;
+    }
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      transition: all .4s;
+    }
+    .dot.on {
+      background: var(--gold);
+      border-color: var(--gold);
+      box-shadow: 0 0 10px rgba(201,169,110,.55);
+    }
+    .prog-txt {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 2.5px;
+    }
+
+    /* ── Écran révélation ────────────────────────────────── */
+    #reveal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 40px;
+    }
+    #reveal.show { display: flex; }
+
+    .rv-wrap {
+      max-width: 580px;
+    }
+
+    .rv-tag {
+      font-size: 10px;
+      letter-spacing: 5.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      animation-delay: .3s;
+    }
+
+    .rv-icon {
+      font-size: 60px;
       display: block;
-      margin: 16px 0;
-      animation: bounce 0.8s ease-in-out infinite alternate;
+      margin: 28px 0;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards, floatY 5s ease-in-out 3s infinite;
+      animation-delay: .6s, 2s;
     }
-    @keyframes bounce {
-      from { transform: translateY(0); }
-      to   { transform: translateY(-10px); }
-    }
-    .final-msg {
-      font-size: 1.15rem;
-      color: #4a90d9;
-      line-height: 1.8;
+    @keyframes floatY {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-14px); }
     }
 
-    /* ─── Images responsives ─── */
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      border-radius: 16px;
-      box-shadow: 0 6px 20px rgba(26,111,204,0.15);
+    .rv-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 6vw, 42px);
+      font-weight: 300;
+      line-height: 1.3;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      animation-delay: .9s;
+    }
+    .rv-title strong {
+      color: var(--gold);
+      font-style: italic;
+      font-weight: 400;
     }
 
-    /* ─── Responsive mobile ─── */
-    @media (max-width: 480px) {
-      .card { padding: 32px 20px; }
-      h1 { font-size: 1.5rem; }
-      .meme-box { font-size: 3.5rem; }
-      .btn { padding: 12px 24px; font-size: 0.95rem; }
-      #code-input { font-size: 2rem; width: 170px; letter-spacing: 8px; }
-      #screen-final h1 { font-size: 1.8rem; }
+    .rv-line {
+      width: 56px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 30px auto;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 1.4s;
     }
 
-    /* ─── Utilitaires ─── */
-    .screen { display: none; }
-    .screen.active { display: block; }
+    .rv-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 4vw, 24px);
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 1.7s;
+    }
+    .rv-sub span { color: var(--gold-lt); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Étoiles tombantes */
+    .star {
+      position: fixed;
+      pointer-events: none;
+      z-index: 190;
+      animation: starFall linear forwards;
+    }
+    @keyframes starFall {
+      0%   { transform: translateY(-40px) rotate(0deg);   opacity: 1; }
+      100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Scrollbar minimal */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 4px; }
+
+    /* Responsive */
+    @media (max-height: 700px) {
+      #lock { padding: 12px 16px; }
+      .hdr  { margin-bottom: 24px; }
+      .hdr h1 { font-size: 34px; }
+      .card { padding: 18px 18px 12px; margin-bottom: 10px; }
+    }
   </style>
 </head>
 <body>
 
-<!-- Confettis -->
-<div class="confetti-wrap" id="confetti-wrap"></div>
+<canvas id="cvs"></canvas>
 
-<!-- ════════════════════════════════════════
-     ÉCRAN 0 – Page d'accueil / code secret
-════════════════════════════════════════ -->
-<div class="card screen active" id="screen-0">
-  <div style="font-size:3rem;">🌸</div>
-  <h1>Site Super Mignon</h1>
-  <p class="subtitle">Entre le code secret pour continuer 🔐</p>
-  <input id="code-input" type="text" maxlength="4" placeholder="????">
-  <br>
-  <button class="btn" onclick="checkCode()">Entrer ✨</button>
-  <p class="error-msg" id="error-msg"></p>
-</div>
+<!-- ════════════════════════════════════════════
+     ÉCRAN VERROU
+     ════════════════════════════════════════════ -->
+<div id="lock">
 
-<!-- ════════════════════════════════════════
-     ÉCRAN 1 – Meme 1
-════════════════════════════════════════ -->
-<div class="card screen" id="screen-1">
-  <div class="meme-box">🐶😐</div>
-  <p class="meme-title">Oupsi</p>
-  <div class="meme-text">
-    <img src="https://i.imgflip.com/aq72uj.jpg" alt="meme drôle" title="made at imgflip.com" />
+  <header class="hdr">
+    <span class="hdr-tag">Accès privé — réservé à une seule personne</span>
+    <span class="hdr-icon">🔐</span>
+    <h1>Pour entrer,<br><em>prouve-le.</em></h1>
+  </header>
+
+  <!-- Énigme I : la date -->
+  <div class="card" id="c1">
+    <div class="card-head">
+      <div class="card-num">I</div>
+      <span class="card-label">La date sacrée</span>
+    </div>
+    <p class="hint">
+      "Le jour où nos deux univers se sont percutés... disneyland.<br>
+      <b>Format JJ MM AA</b>"
+    </p>
+    <div class="field">
+      <input type="text" id="i1" placeholder="__ __ __" maxlength="8" autocomplete="off" spellcheck="false" />
+      <button class="go" id="b1" onclick="check(1)" aria-label="Valider">→</button>
+    </div>
+    <p class="msg" id="m1"></p>
   </div>
-  <button class="btn" onclick="showScreen(2)">Tu veux voir le vrai message ? 👀</button>
-</div>
 
-<!-- ════════════════════════════════════════
-     ÉCRAN 2 – Meme 2
-════════════════════════════════════════ -->
-<div class="card screen" id="screen-2">
-  <div class="meme-box">🤔💭</div>
-  <p class="meme-title">Hmm… t'es sûre sûre sûre ?</p>
-  <div class="meme-text">
-    <img src="https://i.imgflip.com/aq738c.jpg" alt="meme drôle" title="made at imgflip.com"/>
+  <!-- Énigme II : hayati -->
+  <div class="card" id="c2">
+    <div class="card-head">
+      <div class="card-num">II</div>
+      <span class="card-label">Le mot du cœur</span>
+    </div>
+    <p class="hint">
+      "En arabe, il signifie <b>...</b>
+      "
+    </p>
+    <div class="field">
+      <input type="text" id="i2" placeholder="un mot en arabe..." maxlength="20" autocomplete="off" spellcheck="false" />
+      <button class="go" id="b2" onclick="check(2)" aria-label="Valider">→</button>
+    </div>
+    <p class="msg" id="m2"></p>
   </div>
-  <button class="btn" onclick="showScreen(3)">Oui je veux LE vrai message ! 😤</button>
-</div>
 
-<!-- ════════════════════════════════════════
-     ÉCRAN 3 – Meme 3
-════════════════════════════════════════ -->
-<div class="card screen" id="screen-3">
-  <div class="meme-box">🙃🎭</div>
-  <p class="meme-title">Spoiler : c'est toujours pas le message.</p>
-  <div class="meme-text">
-    <img src="https://i.imgflip.com/aq73fv.jpg" alt="meme drôle" title="made at imgflip.com"/>
-    <strong>Dernier bouton, promis ! 🤞</strong>
+  <!-- Énigme III : initiales K + R (clavier) -->
+  <div class="card" id="c3">
+    <div class="card-head">
+      <div class="card-num">III</div>
+      <span class="card-label">Nos initiales</span>
+    </div>
+    <p class="hint">
+      "Deux lettres. <b>Les nôtres.</b><br>
+      Appuie dessus dans l'ordre, sur ce clavier."
+    </p>
+
+    <!-- Affichage des slots K + R -->
+    <div class="kb-display">
+      <span class="kb-slot" id="ks1">_</span>
+      <span class="kb-plus">+</span>
+      <span class="kb-slot" id="ks2">_</span>
+    </div>
+
+    <!-- Faux clavier QWERTY -->
+    <div class="kb-wrap" id="kbw">
+      <div class="kb-row" id="kbr1"></div>
+      <div class="kb-row" id="kbr2"></div>
+      <div class="kb-row" id="kbr3"></div>
+    </div>
+
+    <p class="msg" id="m3"></p>
   </div>
-  <button class="btn" onclick="showFinal()">BON OK MONTRE MOI 😭</button>
+
+  <!-- Progression -->
+  <div class="prog">
+    <div class="dots">
+      <div class="dot" id="d1"></div>
+      <div class="dot" id="d2"></div>
+      <div class="dot" id="d3"></div>
+    </div>
+    <p class="prog-txt" id="ptxt">0 / 3 complétés</p>
+  </div>
+
 </div>
 
-<!-- ════════════════════════════════════════
-     ÉCRAN FINAL – Le vrai message 💖
-════════════════════════════════════════ -->
-<div class="card screen" id="screen-final">
-  <span class="hearts">💖💕💗</span>
-  <h1>Je t'aime trop ma femme</h1>
-  <span class="hearts">💗💕💖</span>
-  <p class="final-msg">
-    Merci d'avoir cliqué trois fois juste pour lire ça.<br>
-    PARDON PARDON PARDON. 😊<br><br>
-    T'es la meilleure personne du monde,<br>
-    et je suis le gars le plus chanceux. 🍀
-  </p>
-  <br>
-  <button class="btn" onclick="restart()">Recommencer depuis le début 🔄</button>
+<!-- ════════════════════════════════════════════
+     ÉCRAN RÉVÉLATION
+     ════════════════════════════════════════════ -->
+<div id="reveal">
+  <div class="rv-wrap">
+    <p class="rv-tag">Ce soir est pour toi</p>
+    <span class="rv-icon">🌙</span>
+    <h2 class="rv-title">
+      Sois prête, nous avons une réservation<br>pour <strong>22h</strong>, ma <strong>Samra</strong>.
+    </h2>
+    <div class="rv-line"></div>
+    <p class="rv-sub">
+      Rien à foutre du foot...<br>
+      <span>ya que toi qui compte.</span>
+    </p>
+  </div>
 </div>
 
 <script>
-  /* ── Confettis générés dynamiquement ── */
-  (function() {
-    const colors = ['#4aa8ff','#90c4f0','#7dd3fc','#1a6fcc','#bae6fd','#dbeafe'];
-    const wrap = document.getElementById('confetti-wrap');
-    for (let i = 0; i < 35; i++) {
-      const c = document.createElement('div');
-      c.className = 'confetti';
-      c.style.left        = Math.random() * 100 + 'vw';
-      c.style.width       = (6 + Math.random() * 8) + 'px';
-      c.style.height      = (6 + Math.random() * 8) + 'px';
-      c.style.background  = colors[Math.floor(Math.random() * colors.length)];
-      c.style.animationDuration = (4 + Math.random() * 8) + 's';
-      c.style.animationDelay   = (Math.random() * 6) + 's';
-      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-      wrap.appendChild(c);
-    }
+  /* ── Particules ─────────────────────────────────── */
+  const cvs = document.getElementById('cvs');
+  const ctx = cvs.getContext('2d');
+  let pts = [];
+
+  function resize() {
+    cvs.width  = window.innerWidth;
+    cvs.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function mkPt() {
+    return {
+      x: Math.random() * cvs.width,
+      y: Math.random() * cvs.height,
+      r: Math.random() * 1.4 + 0.3,
+      a: Math.random() * 0.45 + 0.08,
+      vy: Math.random() * 0.25 + 0.05,
+      vx: (Math.random() - .5) * 0.15,
+    };
+  }
+  for (let i = 0; i < 90; i++) pts.push(mkPt());
+
+  (function loop() {
+    ctx.clearRect(0, 0, cvs.width, cvs.height);
+    pts.forEach((p, i) => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201,169,110,${p.a})`;
+      ctx.fill();
+      p.y -= p.vy;
+      p.x += p.vx;
+      if (p.y < -5) {
+        pts[i] = mkPt();
+        pts[i].y = cvs.height + 5;
+      }
+    });
+    requestAnimationFrame(loop);
   })();
 
-  /* ── Vérifie le code secret ── */
-  function checkCode() {
-    const val = document.getElementById('code-input').value.trim();
-    const err = document.getElementById('error-msg');
-    if (val === '0802') {
-      err.textContent = '';
-      showScreen(1);
+  /* ── Énigmes ────────────────────────────────────── */
+  // Normalise les espaces et la casse
+  const norm = s => s.trim().toLowerCase().replace(/\s+/g, ' ');
+
+  const ANSWERS = {
+    1: ['08 02 26', '080226', '08/02/26', '08-02-26'],
+    2: ['hayati', 'حياتي'],
+  };
+
+  const solved = [false, false, false]; // index 0 = énigme 1
+
+  function solveCard(n) {
+    solved[n - 1] = true;
+    document.getElementById(`c${n}`).classList.add('solved');
+    const msgEl = document.getElementById(`m${n}`);
+    msgEl.className = 'msg ok';
+    msgEl.textContent = '✓ Parfait...';
+    document.getElementById(`d${n}`).classList.add('on');
+    updateProg();
+  }
+
+  function check(n) {
+    if (solved[n - 1]) return;
+
+    const inp  = document.getElementById(`i${n}`);
+    const msgEl = document.getElementById(`m${n}`);
+    const card  = document.getElementById(`c${n}`);
+    const val   = norm(inp.value);
+
+    if (!val) return;
+
+    const ok = ANSWERS[n].some(a => norm(a) === val);
+
+    if (ok) {
+      inp.classList.add('ok');
+      inp.disabled = true;
+      document.getElementById(`b${n}`).disabled = true;
+      solveCard(n);
     } else {
-      err.textContent = '❌ Mauvais code, essaie encore ! (psst : c\'est une date…)';
+      card.classList.add('shake');
+      msgEl.className = 'msg err';
+      msgEl.textContent = 'Essaie encore...';
+      setTimeout(() => card.classList.remove('shake'), 500);
+      setTimeout(() => { if (!solved[n-1]) msgEl.textContent = ''; }, 2200);
     }
   }
 
-  /* Permet aussi d'appuyer Entrée */
-  document.getElementById('code-input').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') checkCode();
+  function updateProg() {
+    const n = solved.filter(Boolean).length;
+    document.getElementById('ptxt').textContent = `${n} / 3 complétés`;
+    if (n === 3) setTimeout(reveal, 850);
+  }
+
+  // Touche Entrée (seulement pour les inputs texte 1 et 2)
+  [1, 2].forEach(n =>
+    document.getElementById(`i${n}`)
+      .addEventListener('keydown', e => { if (e.key === 'Enter') check(n); })
+  );
+
+  /* ── Faux clavier ──────────────────────────────── */
+  const KB_ROWS = [
+    ['Q','W','E','R','T','Y','U','I','O','P'],
+    ['A','S','D','F','G','H','J','K','L'],
+    ['Z','X','C','V','B','N','M'],
+  ];
+  let kbStep = 0; // 0 = attend K, 1 = attend R
+
+  KB_ROWS.forEach((row, ri) => {
+    const rowEl = document.getElementById(`kbr${ri + 1}`);
+    row.forEach(letter => {
+      const btn = document.createElement('button');
+      btn.className = 'kb-key';
+      btn.textContent = letter;
+      btn.dataset.letter = letter;
+      btn.addEventListener('click', () => kbPress(letter, btn));
+      rowEl.appendChild(btn);
+    });
   });
 
-  /* ── Navigation entre les écrans ── */
-  function showScreen(n) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('screen-' + n).classList.add('active');
-    // scroll en haut au cas où
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Écoute aussi le vrai clavier physique
+  document.addEventListener('keydown', e => {
+    if (solved[2]) return;
+    const l = e.key.toUpperCase();
+    if (l === 'K' || l === 'R') {
+      const btn = [...document.querySelectorAll('.kb-key')].find(b => b.dataset.letter === l);
+      if (btn) kbPress(l, btn);
+    }
+  });
+
+  function kbPress(letter, btn) {
+    if (solved[2]) return;
+
+    // Anim visuelle de la touche pressée
+    btn.classList.add('pressed');
+    setTimeout(() => btn.classList.remove('pressed'), 200);
+
+    const slot1 = document.getElementById('ks1');
+    const slot2 = document.getElementById('ks2');
+    const msgEl = document.getElementById('m3');
+    const card  = document.getElementById('c3');
+
+    if (kbStep === 0) {
+      if (letter === 'K') {
+        slot1.textContent = 'K';
+        slot1.classList.add('active');
+        kbStep = 1;
+
+        msgEl.className = 'msg';
+        msgEl.textContent = '';
+      } else {
+        // Mauvaise touche
+        card.classList.add('shake');
+        msgEl.className = 'msg err';
+        msgEl.textContent = 'Commence par la bonne lettre…';
+        setTimeout(() => card.classList.remove('shake'), 500);
+        setTimeout(() => { if (!solved[2]) msgEl.textContent = ''; }, 2200);
+      }
+    } else if (kbStep === 1) {
+      if (letter === 'R') {
+        slot2.textContent = 'R';
+        slot2.classList.add('active');
+        // Réussite
+        setTimeout(() => {
+          slot1.classList.remove('active'); slot1.classList.add('done');
+          slot2.classList.remove('active'); slot2.classList.add('done');
+          document.querySelectorAll('.kb-key').forEach(b => b.classList.add('disabled-kb'));
+          solveCard(3);
+        }, 280);
+      } else if (letter === 'K') {
+        // Pressé K de nouveau, on reste à l'étape 1 (K déjà actif)
+        msgEl.className = 'msg err';
+        msgEl.textContent = 'K est déjà là... maintenant R !';
+        setTimeout(() => { if (!solved[2]) msgEl.textContent = ''; }, 2200);
+      } else {
+        // Mauvaise touche, reset
+        kbStep = 0;
+        slot1.textContent = '_';
+        slot1.classList.remove('active', 'done');
+        slot2.textContent = '_';
+        slot2.classList.remove('active', 'done');
+        card.classList.add('shake');
+        msgEl.className = 'msg err';
+        msgEl.textContent = 'Raté... recommence par K.';
+
+        setTimeout(() => card.classList.remove('shake'), 500);
+        setTimeout(() => { if (!solved[2]) msgEl.textContent = ''; }, 2200);
+      }
+    }
   }
 
-  function showFinal() {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('screen-final').classList.add('active');
-    // feux d'artifice de confettis supplémentaires
-    launchExtraConfetti();
+  /* ── Révélation ─────────────────────────────────── */
+  function reveal() {
+    rain();
+    document.getElementById('reveal').classList.add('show');
+    setTimeout(rain, 1600);
+    setTimeout(rain, 2800);
   }
 
-  function restart() {
-    document.getElementById('code-input').value = '';
-    showScreen(0);
-  }
+  const STARS = ['✨','💫','🌟','⭐','💖','🌙','✦','◆','✧','♡'];
 
-  /* ── Confettis bonus pour le message final ── */
-  function launchExtraConfetti() {
-    const colors = ['#4aa8ff','#bae6fd','#7dd3fc','#dbeafe','#1a6fcc','#93c5fd'];
-    const wrap = document.getElementById('confetti-wrap');
-    for (let i = 0; i < 40; i++) {
-      const c = document.createElement('div');
-      c.className = 'confetti';
-      c.style.left        = Math.random() * 100 + 'vw';
-      c.style.top         = '-20px';
-      c.style.width       = (8 + Math.random() * 10) + 'px';
-      c.style.height      = (8 + Math.random() * 10) + 'px';
-      c.style.background  = colors[Math.floor(Math.random() * colors.length)];
-      c.style.animationDuration = (2 + Math.random() * 4) + 's';
-      c.style.animationDelay   = (Math.random() * 1) + 's';
-      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
-      wrap.appendChild(c);
-      // nettoyage après l'animation
-      setTimeout(() => c.remove(), 6000);
+  function rain() {
+    for (let i = 0; i < 22; i++) {
+      const el = document.createElement('span');
+      el.className = 'star';
+      el.textContent = STARS[Math.floor(Math.random() * STARS.length)];
+      el.style.cssText = `
+        left: ${Math.random() * 100}vw;
+        top: -40px;
+        font-size: ${Math.random() * 18 + 11}px;
+        animation-duration: ${Math.random() * 3 + 2.5}s;
+        animation-delay: ${Math.random() * 1.8}s;
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 7000);
     }
   }
 </script>
